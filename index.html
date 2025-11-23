@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>HTB-BOX | HTB Writeups & Notes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Coleção de writeups e anotações de máquinas Hack The Box.">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-alt: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #161b22 0, #0d1117 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      max-width: 1024px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    @media (min-width: 720px) {
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .brand-title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 460px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(22, 27, 34, 0.8);
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background: rgba(33, 38, 45, 1);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      background: rgba(13, 17, 23, 0.7);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border);
+      padding: 1rem 1.1rem;
+    }
+
+    .box-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .box-card {
+      background: linear-gradient(145deg, #10151d, #0c1117);
+      border-radius: 0.85rem;
+      border: 1px solid var(--border);
+      padding: 1rem 1.1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .box-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(88, 166, 255, 0.12), transparent 55%);
+      pointer-events: none;
+    }
+
+    .box-name {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .box-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.8rem;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 0.1rem 0.6rem;
+      border: 1px solid var(--border);
+      background: rgba(22, 27, 34, 0.9);
+      font-size: 0.75rem;
+    }
+
+    .box-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .box-footer {
+      margin-top: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      z-index: 1;
+    }
+
+    .box-footer a {
+      font-weight: 500;
+    }
+
+    .taglist {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-title">HTB-BOX</div>
+        <p class="brand-subtitle">
+          Writeups enxutos, anotações de pentest e experimentos em máquinas Hack The Box.
+          Foco em metodologia, automação e aprendizado prático.
+        </p>
+      </div>
+      <nav>
+        <a href="#boxes">Máquinas</a>
+        <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">Repositório GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section aria-labelledby="intro">
+        <h2 id="intro" class="section-title">Visão geral</h2>
+        <div class="intro">
+          <p>
+            Este site agrupa writeups e notas de estudo de CTF focados em Hack The Box.
+            Cada máquina vem com passo a passo, comandos utilizados e ideias de automação
+            para refinar o fluxo de enumeração, exploração e pós-exploração.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="boxes" id="boxes">
+        <h2 class="section-title">Máquinas Hack The Box</h2>
+        <div class="box-grid">
+          <!-- Exemplo de card - Data -->
+          <article class="box-card">
+            <div class="box-name">Data</div>
+            <div class="box-meta">
+              <span class="badge">Linux</span>
+              <span class="badge">Easy</span>
+              <span>Plataforma: Hack The Box</span>
+            </div>
+            <p class="box-desc">
+              Enumeração web, análise de parâmetros, leitura de PCAP e exploração orientada por dados
+              coletados pela própria aplicação. Foco em metodologia e uso de scripts auxiliares.
+            </p>
+            <div class="box-footer">
+              <a href="htb_data_writeup_md.html">Ler writeup &rarr;</a>
+              <div class="taglist">
+                <span>#web</span>
+                <span>#pcap</span>
+                <span>#enum</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Placeholder para próximas máquinas -->
+          <article class="box-card">
+            <div class="box-name">Em breve</div>
+            <div class="box-meta">
+              <span class="badge">HTB</span>
+              <span class="badge">To-Do</span>
+              <span>Próximos writeups</span>
+            </div>
+            <p class="box-desc">
+              Espaço reservado para novas máquinas e laboratórios:
+              notas de automação, cheatsheets e ajustes de ambiente.
+            </p>
+            <div class="box-footer">
+              <span>Atualize este card no index.html</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year"></span> HTB-BOX</span>
+      <span>Powered by GitHub Pages</span>
+    </footer>
+  </div>
+
+  <script>
+    // Atualiza automaticamente o ano no rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
