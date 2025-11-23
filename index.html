@@ -1,255 +1,496 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>HTB-BOX | HTB Writeups & Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Coleção de writeups e anotações de máquinas Hack The Box.">
+  <title>HTB-BOX | Portfólio de Writeups</title>
+  <meta name="description" content="Portfólio de writeups Hack The Box e estudos em segurança ofensiva por Sérgio Muniz.">
+  <meta property="og:title" content="HTB-BOX | Portfólio de Writeups">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:description" content="Coleção organizada de writeups HTB, separados por dificuldade e focados em segurança ofensiva.">
+  <meta property="og:type" content="website">
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-alt: #161b22;
-      --border: #30363d;
-      --text: #e6edf3;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
+      --bg-main: #050608;
+      --bg-elevated: #0b1017;
+      --bg-card: #101218;
+      --border-subtle: #262c36;
+      --accent: #f97373;
+      --accent-soft: #2b0a0a;
+      --text-main: #e5e5e5;
+      --text-muted: #9b9b9b;
+      --title: #f9fafb;
+      --link: #7aa2ff;
+      --htb-green: #a3e635;
+      --btn-bg: #111827;
+      --btn-border: #374151;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #161b22 0, #0d1117 55%);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      background: radial-gradient(circle at top, #111827 0, #050608 55%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
 
     .page {
-      max-width: 1024px;
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 3rem;
+      max-width: 1120px;
+      margin: 32px auto 56px;
+      padding: 0 20px;
     }
 
-    header {
+    /* Topbar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #111827, #1f2937);
+      border: 1px solid #4b5563;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--htb-green);
+    }
+
+    .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.5rem;
-    }
-
-    @media (min-width: 720px) {
-      header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+      gap: 2px;
     }
 
     .brand-title {
-      font-size: 1.9rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: var(--text-main);
     }
 
-    .brand-subtitle {
-      font-size: 0.95rem;
+    .brand-sub {
+      font-size: 0.75rem;
       color: var(--text-muted);
-      max-width: 460px;
     }
 
-    nav {
+    .nav {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      font-size: 0.9rem;
+      gap: 10px;
+      font-size: 0.85rem;
     }
 
-    nav a {
-      padding: 0.45rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(22, 27, 34, 0.8);
+    .nav a {
+      color: var(--text-muted);
       text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
     }
 
-    nav a:hover {
-      background: rgba(33, 38, 45, 1);
+    .nav a:hover {
+      color: var(--title);
+      border-color: var(--border-subtle);
+      background: #0b1018;
     }
 
-    main {
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .hero-main {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 16px;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--htb-green);
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      line-height: 1.15;
+      color: var(--title);
+      margin: 0;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      border-color: #f97373;
+      background: linear-gradient(135deg, #b91c1c, #f97373);
+      color: #0b0f19;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover { filter: brightness(1.05); }
+
+    .btn-ghost:hover { background: #111827; }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta span strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .hero-aside {
+      justify-self: center;
+    }
+
+    .icon-badge svg {
+      display: block;
+      width: 120px;
+      height: 120px;
+    }
+
+    .hero-aside-note {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Sections */
+    .section {
+      background: var(--bg-card);
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      padding: 20px 20px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10px;
     }
 
     .section-title {
-      font-size: 1.1rem;
-      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      margin: 0;
     }
 
-    .intro {
-      font-size: 0.95rem;
+    .section-subtitle {
+      font-size: 0.82rem;
       color: var(--text-muted);
-      line-height: 1.5;
-      background: rgba(13, 17, 23, 0.7);
-      border-radius: 0.75rem;
-      border: 1px solid var(--border);
-      padding: 1rem 1.1rem;
     }
 
-    .box-grid {
+    .section-body p {
+      font-size: 0.94rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    /* Cards de máquinas */
+    .grid-machines {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
     }
 
-    .box-card {
-      background: linear-gradient(145deg, #10151d, #0c1117);
-      border-radius: 0.85rem;
-      border: 1px solid var(--border);
-      padding: 1rem 1.1rem 1.1rem;
+    .machine-card {
+      background: var(--bg-main);
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      padding: 16px 16px 18px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      position: relative;
-      overflow: hidden;
+      gap: 8px;
     }
 
-    .box-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(88, 166, 255, 0.12), transparent 55%);
-      pointer-events: none;
+    .machine-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
     }
 
-    .box-name {
-      font-weight: 600;
-      font-size: 1.05rem;
+    .machine-title {
+      font-size: 1.02rem;
+      margin: 0;
+      color: var(--title);
     }
 
-    .box-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
+    .machine-level {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--htb-green);
+    }
+
+    .machine-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem 0.8rem;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
       border-radius: 999px;
-      padding: 0.1rem 0.6rem;
-      border: 1px solid var(--border);
-      background: rgba(22, 27, 34, 0.9);
+      border: 1px solid var(--border-subtle);
+      background: #111827;
       font-size: 0.75rem;
+      color: var(--text-main);
     }
 
-    .box-desc {
-      font-size: 0.9rem;
+    .machine-desc {
+      font-size: 0.88rem;
       color: var(--text-muted);
-      line-height: 1.4;
+      line-height: 1.6;
     }
 
-    .box-footer {
-      margin-top: 0.4rem;
+    .machine-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-top: 4px;
       font-size: 0.8rem;
-      z-index: 1;
     }
 
-    .box-footer a {
-      font-weight: 500;
-    }
-
-    .taglist {
+    .tags {
       display: flex;
-      gap: 0.4rem;
       flex-wrap: wrap;
+      gap: 4px;
+      color: var(--text-muted);
     }
+
+    /* Dificuldades */
+    .grid-difficulty {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .diff-card {
+      background: var(--bg-main);
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .diff-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--title);
+    }
+
+    .diff-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .diff-link {
+      margin-top: 4px;
+      font-size: 0.82rem;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Sobre */
+    .about-list {
+      margin: 0.4rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .about-list li { margin-bottom: 4px; }
 
     footer {
-      margin-top: 2.5rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1rem;
-      font-size: 0.8rem;
+      margin-top: 22px;
+      font-size: 0.78rem;
       color: var(--text-muted);
+      border-top: 1px solid #1f2933;
+      padding-top: 10px;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
-      gap: 0.6rem;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    @media (max-width: 800px) {
+      .page {
+        margin: 22px auto 40px;
+        padding: 0 14px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-aside { justify-self: flex-start; }
+      .hero-title { font-size: 1.7rem; }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <header>
-      <div class="brand">
-        <div class="brand-title">HTB-BOX</div>
-        <p class="brand-subtitle">
-          Writeups enxutos, anotações de pentest e experimentos em máquinas Hack The Box.
-          Foco em metodologia, automação e aprendizado prático.
-        </p>
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="brand-mark">
+        <div class="brand-icon">SM</div>
+        <div class="brand-text">
+          <div class="brand-title">HTB-BOX</div>
+          <div class="brand-sub">Portfólio de writeups &amp; labs</div>
+        </div>
       </div>
-      <nav>
-        <a href="#boxes">Máquinas</a>
-        <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">Repositório GitHub</a>
+      <nav class="nav">
+        <a href="#machines">Máquinas</a>
+        <a href="#difficulty">Dificuldade</a>
+        <a href="#about">Sobre</a>
+        <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">GitHub</a>
       </nav>
     </header>
 
-    <main>
-      <section aria-labelledby="intro">
-        <h2 id="intro" class="section-title">Visão geral</h2>
-        <div class="intro">
-          <p>
-            Este site agrupa writeups e notas de estudo de CTF focados em Hack The Box.
-            Cada máquina vem com passo a passo, comandos utilizados e ideias de automação
-            para refinar o fluxo de enumeração, exploração e pós-exploração.
-          </p>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-kicker">Sérgio Muniz · Segurança Ofensiva</div>
+        <h1 class="hero-title">Portfólio de writeups Hack The Box.</h1>
+        <p class="hero-subtitle">
+          Laboratório pessoal com foco em enumeração estruturada, exploração prática e automação de tarefas
+          de CTF/pentest. Cada writeup é pensado para ser reprodutível e servir de referência para futuros
+          projetos.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#machines">Ver máquinas publicadas</a>
+          <a class="btn btn-ghost" href="#about">Ver abordagem de trabalho</a>
         </div>
-      </section>
+        <div class="hero-meta">
+          <span><strong>Stack:</strong> HTB, Linux, Web, Network, Priv-Esc</span>
+          <span><strong>Formato:</strong> HTML estático a partir deste repositório</span>
+        </div>
+      </div>
 
-      <section aria-labelledby="boxes" id="boxes">
-        <h2 class="section-title">Máquinas Hack The Box</h2>
-        <div class="box-grid">
-          <!-- Exemplo de card - Data -->
-          <article class="box-card">
-            <div class="box-name">Data</div>
-            <div class="box-meta">
-              <span class="badge">Linux</span>
-              <span class="badge">Easy</span>
-              <span>Plataforma: Hack The Box</span>
+      <aside class="hero-aside">
+        <div class="icon-badge">
+          <!-- Ícone genérico, neutro -->
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HTB-BOX icon">
+            <defs>
+              <radialGradient id="iconGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#7aa2ff" stop-opacity="0.4" />
+                <stop offset="55%" stop-color="#7aa2ff" stop-opacity="0.05" />
+                <stop offset="100%" stop-color="#000" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <circle cx="60" cy="60" r="56" fill="#020617" stroke="#4b5563" stroke-width="6" />
+            <circle cx="60" cy="60" r="48" fill="url(#iconGlow)" />
+            <rect x="36" y="36" width="48" height="48" rx="8" fill="#020617" stroke="#7aa2ff" stroke-width="2" />
+            <rect x="42" y="48" width="36" height="4" rx="2" fill="#9ca3af" />
+            <rect x="42" y="58" width="26" height="3" rx="1.5" fill="#6b7280" />
+            <rect x="42" y="66" width="32" height="3" rx="1.5" fill="#6b7280" />
+          </svg>
+        </div>
+        <div class="hero-aside-note">Conteúdo gerado a partir deste repositório GitHub.</div>
+      </aside>
+    </section>
+
+    <!-- Destaques / Máquinas -->
+    <section id="machines" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Máquinas em destaque</h2>
+        <p class="section-subtitle">Writeups já publicados neste repositório.</p>
+      </div>
+      <div class="section-body">
+        <div class="grid-machines">
+          <!-- Card: Data -->
+          <article class="machine-card">
+            <div class="machine-header">
+              <h3 class="machine-title">HTB: Data</h3>
+              <span class="machine-level">Easy</span>
             </div>
-            <p class="box-desc">
-              Enumeração web, análise de parâmetros, leitura de PCAP e exploração orientada por dados
-              coletados pela própria aplicação. Foco em metodologia e uso de scripts auxiliares.
+            <div class="machine-meta">
+              <span class="badge">Linux</span>
+              <span class="badge">Web / Forensics leve</span>
+              <span>Enumeração HTTP · PCAP · análise de parâmetros</span>
+            </div>
+            <p class="machine-desc">
+              Máquina focada em coleta e interpretação de dados expostos pela própria aplicação. O writeup
+              cobre enumeração web, leitura de capturas de tráfego e uso desses artefatos para guiar a
+              exploração.
             </p>
-            <div class="box-footer">
-              <a href="htb_data_writeup_md.html">Ler writeup &rarr;</a>
-              <div class="taglist">
+            <div class="machine-footer">
+              <a href="HTB_Data.html">Abrir writeup &rarr;</a>
+              <div class="tags">
                 <span>#web</span>
                 <span>#pcap</span>
                 <span>#enum</span>
@@ -257,34 +498,86 @@
             </div>
           </article>
 
-          <!-- Placeholder para próximas máquinas -->
-          <article class="box-card">
-            <div class="box-name">Em breve</div>
-            <div class="box-meta">
-              <span class="badge">HTB</span>
-              <span class="badge">To-Do</span>
-              <span>Próximos writeups</span>
+          <!-- Espaço para próxima máquina -->
+          <article class="machine-card">
+            <div class="machine-header">
+              <h3 class="machine-title">Próxima máquina</h3>
+              <span class="machine-level">Easy / Medium</span>
             </div>
-            <p class="box-desc">
-              Espaço reservado para novas máquinas e laboratórios:
-              notas de automação, cheatsheets e ajustes de ambiente.
+            <div class="machine-meta">
+              <span class="badge">Placeholder</span>
+              <span>Reserve este card para o próximo writeup.</span>
+            </div>
+            <p class="machine-desc">
+              Quando adicionar um novo HTML (por exemplo em <code>Easy/&lt;nome_caixa&gt;.html</code>), duplique
+              este card, ajuste o texto e atualize o link para apontar diretamente para o writeup.
             </p>
-            <div class="box-footer">
-              <span>Atualize este card no index.html</span>
+            <div class="machine-footer">
+              <span>Edite em <code>index.html</code> para manter o portfólio atualizado.</span>
             </div>
           </article>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+
+    <!-- Organização por dificuldade -->
+    <section id="difficulty" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Organização por dificuldade</h2>
+        <p class="section-subtitle">Seções do repositório espelhadas na navegação do site.</p>
+      </div>
+      <div class="section-body">
+        <div class="grid-difficulty">
+          <article class="diff-card">
+            <div class="diff-name">Easy</div>
+            <div class="diff-desc">
+              Máquinas de entrada, usadas para treinar fluxo completo (enumeração &rarr; exploit &rarr; privesc)
+              e testar novas automações.
+            </div>
+            <div class="diff-link">
+              <a href="Easy/">Abrir pasta <code>Easy/</code> &rarr;</a>
+            </div>
+          </article>
+
+          <article class="diff-card">
+            <div class="diff-name">Medium / Hard (planejado)</div>
+            <div class="diff-desc">
+              Espaço reservado para futuras caixas de dificuldade maior, mantendo a mesma estrutura de HTML
+              estático e organização por diretórios.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre / abordagem -->
+    <section id="about" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Abordagem de trabalho</h2>
+        <p class="section-subtitle">Como os writeups são estruturados.</p>
+      </div>
+      <div class="section-body">
+        <p>
+          Cada página deste portfólio é pensada como documentação técnica reutilizável. A ideia é que qualquer
+          pessoa com um ambiente de lab consiga reproduzir os passos apenas lendo o HTML do writeup, sem depender
+          de anotações externas.
+        </p>
+        <ul class="about-list">
+          <li>Enumeração organizada por serviço (Nmap, HTTP, SMB, etc.).</li>
+          <li>Comandos claros, com foco em automação e reutilização em outros labs.</li>
+          <li>Exploração explicada de forma objetiva, sem “spoilers” desnecessários.</li>
+          <li>Espaço para notas de pós-exploração e ideias de hardening quando fizer sentido.</li>
+        </ul>
+      </div>
+    </section>
 
     <footer>
-      <span>© <span id="year"></span> HTB-BOX</span>
-      <span>Powered by GitHub Pages</span>
+      <span>&copy; <span id="year"></span> Sérgio Muniz · HTB-BOX</span>
+      <span>Repositório: <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">github.com/Sergiomunizss/HTB-BOX</a></span>
     </footer>
   </div>
 
   <script>
-    // Atualiza automaticamente o ano no rodapé
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
