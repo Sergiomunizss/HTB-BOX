@@ -445,7 +445,7 @@ New-Item -ItemType Directory -Path `
 Set-Location $WORK</code></pre>
 
           <h3>2.2. Mapeamento de portas e serviços expostos</h3>
-          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n `
+          <pre><code>/home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n `
   --min-rate 10000 -vvv `
   -oA "$WORK/scans/full_tcp_allports" `
   $IP</code></pre>
@@ -475,7 +475,7 @@ Set-Location $WORK</code></pre>
             </tbody>
           </table>
           <p>As demais 65.533 portas foram reportadas como fechadas (<code>reset</code>).</p>
-          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv `
+          <pre><code>/home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv `
   -oA "$WORK/scans/targeted_22_3000" `
   $IP</code></pre>
           <p>22/tcp: <code>OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)</code> &rarr; indica <strong>Ubuntu 18.04 Bionic</strong>.</p>
