@@ -39,10 +39,9 @@
 
     body {
       min-height: 100vh;
-      background:
-        radial-gradient(circle at top, #151c30 0, #050608 55%, #000 100%);
+      background: var(--bg);
       color: var(--text);
-      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", sans-serif;
       font-size: 15px;
       line-height: 1.7;
@@ -82,10 +81,17 @@
 
     /* HEADER */
     .article-header {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1.8fr);
+      align-items: flex-start;
       gap: 1.6rem;
-      margin-bottom: 2.2rem;
+      margin-bottom: 2.6rem;
+      padding: 1.5rem 1.6rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background-color: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
     }
 
     .logo-pill {
@@ -95,7 +101,7 @@
       padding: 0.2rem 1rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border);
-      background: radial-gradient(circle at top left, #1f2937 0, #050608 60%);
+      background-color: #050608;
       box-shadow: 0 0 0 1px rgba(214, 255, 63, 0.12);
       font-size: 0.78rem;
       letter-spacing: 0.18em;
@@ -116,11 +122,11 @@
       flex: 0 0 auto;
       display: grid;
       place-items: center;
-      width: 110px;
-      height: 110px;
-      border-radius: 24px;
-      background: radial-gradient(circle at top, rgba(214, 255, 63, 0.25) 0, rgba(5, 6, 8, 0.9) 55%);
-      border: 1px solid rgba(214, 255, 63, 0.5);
+      width: 120px;
+      height: 120px;
+      border-radius: 26px;
+      background-color: #050608;
+      border: 1px solid rgba(214, 255, 63, 0.55);
       box-shadow: var(--shadow);
     }
 
@@ -150,16 +156,16 @@
     }
 
     .title-main {
-      font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+      font-size: clamp(1.9rem, 3.6vw, 2.6rem);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.4rem;
     }
 
     .subtitle {
       color: var(--muted);
       font-size: 0.9rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.9rem;
     }
 
     .accent-divider {
@@ -169,44 +175,61 @@
     }
 
     .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem 1.5rem;
-      font-size: 0.8rem;
-      margin-top: 0.2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem 1.1rem;
+      font-size: 0.78rem;
+      margin-top: 0.8rem;
+      padding: 0.8rem 0.95rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 6, 8, 0.92);
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
     }
 
     .meta-item {
-      min-width: 130px;
+      min-width: 0;
     }
 
     .meta-label {
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      font-size: 0.68rem;
       color: var(--muted);
       display: block;
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.12rem;
     }
 
     .meta-value {
       color: var(--accent);
       font-weight: 600;
+      font-size: 0.86rem;
     }
 
     /* CARDS / SECTIONS */
     section.article-section {
-      margin-bottom: 2.4rem;
+      margin-bottom: 2.8rem;
     }
 
     .card {
-      background:
-        radial-gradient(circle at top right, rgba(214, 255, 63, 0.12) 0, transparent 55%),
-        linear-gradient(135deg, #050608, #060910);
+      position: relative;
+      background-color: var(--card);
       border-radius: var(--radius-lg);
       border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 1.4rem 1.6rem 1.7rem;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(214, 255, 63, 0.12);
+      opacity: 0.8;
+      pointer-events: none;
     }
 
     .card h2 {
@@ -304,6 +327,88 @@
       background: #070b14;
     }
 
+    .card-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(230px, 0.9fr);
+      gap: 1.6rem;
+      align-items: stretch;
+    }
+
+    .card-split-main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-profile {
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background-color: #02040a;
+      padding: 1rem 1.25rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 26px rgba(0, 0, 0, 0.9);
+    }
+
+    .card-profile::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(214, 255, 63, 0.12);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .profile-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background-color: var(--accent);
+      box-shadow: 0 0 6px rgba(214, 255, 63, 0.7);
+    }
+
+    .profile-status {
+      color: var(--accent);
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      row-gap: 0.25rem;
+      column-gap: 1.7rem;
+      font-size: 0.8rem;
+    }
+
+    .profile-label {
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .profile-value {
+      color: var(--accent);
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+    }
+
     /* FOOTER */
     footer.article-footer {
       margin-top: 1.2rem;
@@ -321,6 +426,29 @@
       .page-shell {
         padding-inline: 1rem;
       }
+
+      .article-header {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .badge-icon {
+        width: 96px;
+        height: 96px;
+      }
+
+      .card {
+        border-radius: 18px;
+        padding: 1.2rem 1.1rem 1.4rem;
+      }
+
+      .card-split {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .card-profile {
+        margin-top: 1.2rem;
+      }
+    }
 
       .article-header {
         flex-direction: column;
@@ -393,18 +521,38 @@
       </header>
 
       <section class="article-section">
-        <div class="card">
-          <h2>0. Metadados da Máquina</h2>
-          <ul>
-            <li>Plataforma: Hack The Box</li>
-            <li>Nome da máquina: <strong>Data</strong></li>
-            <li>Sistema operacional: Linux</li>
-            <li>Nível de dificuldade: Easy</li>
-            <li>Endereço IP do alvo: <code>10.129.234.47</code></li>
-            <li>Estado da máquina: Em andamento</li>
-            <li>Data da execução: <code>2025-11-23</code></li>
-            <li>Autor: <code>Sérgio Muniz</code></li>
-          </ul>
+        <div class="card card-split">
+          <div class="card-split-main">
+            <h2>0. Metadados da Máquina</h2>
+            <ul>
+              <li>Plataforma: Hack The Box</li>
+              <li>Nome da máquina: <strong>Data</strong></li>
+              <li>Sistema operacional: Linux</li>
+              <li>Nível de dificuldade: Easy</li>
+              <li>Endereço IP do alvo: <code>10.129.234.47</code></li>
+              <li>Estado da máquina: Em andamento</li>
+              <li>Data da execução: <code>2025-11-23</code></li>
+              <li>Autor: <code>Sérgio Muniz</code></li>
+            </ul>
+          </div>
+          <aside class="card-profile" aria-label="Resumo da máquina">
+            <div class="profile-header">
+              <span class="profile-dot" aria-hidden="true"></span>
+              <span class="profile-status">Em andamento</span>
+            </div>
+            <div class="profile-grid">
+              <div class="profile-label">MACHINE</div>
+              <div class="profile-value">Data</div>
+              <div class="profile-label">OS</div>
+              <div class="profile-value">Linux</div>
+              <div class="profile-label">LEVEL</div>
+              <div class="profile-value">Easy</div>
+              <div class="profile-label">IP</div>
+              <div class="profile-value">10.129.234.47</div>
+              <div class="profile-label">STATE</div>
+              <div class="profile-value">Em andamento</div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -445,7 +593,7 @@ New-Item -ItemType Directory -Path `
 Set-Location $WORK</code></pre>
 
           <h3>2.2. Mapeamento de portas e serviços expostos</h3>
-          <pre><code>/home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n `
+          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n `
   --min-rate 10000 -vvv `
   -oA "$WORK/scans/full_tcp_allports" `
   $IP</code></pre>
@@ -475,7 +623,7 @@ Set-Location $WORK</code></pre>
             </tbody>
           </table>
           <p>As demais 65.533 portas foram reportadas como fechadas (<code>reset</code>).</p>
-          <pre><code>/home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv `
+          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv `
   -oA "$WORK/scans/targeted_22_3000" `
   $IP</code></pre>
           <p>22/tcp: <code>OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)</code> &rarr; indica <strong>Ubuntu 18.04 Bionic</strong>.</p>
