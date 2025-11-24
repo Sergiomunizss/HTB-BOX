@@ -1,584 +1,1413 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HTB-BOX | Portfólio de Writeups</title>
-  <meta name="description" content="Portfólio de writeups Hack The Box e estudos em segurança ofensiva por Sérgio Muniz.">
-  <meta property="og:title" content="HTB-BOX | Portfólio de Writeups">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:description" content="Coleção organizada de writeups HTB, separados por dificuldade e focados em segurança ofensiva.">
-  <meta property="og:type" content="website">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>V | CTF Writeups</title>
+  <meta name="description" content="Portfolio de writeups de CTF e labs de cybersecurity." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --bg-main: #050608;
-      --bg-elevated: #0b1017;
-      --bg-card: #101218;
-      --border-subtle: #262c36;
-      --accent: #f97373;
-      --accent-soft: #2b0a0a;
-      --text-main: #e5e5e5;
-      --text-muted: #9b9b9b;
-      --title: #f9fafb;
-      --link: #7aa2ff;
-      --htb-green: #a3e635;
-      --btn-bg: #111827;
-      --btn-border: #374151;
+      --bg: #050608;
+      --bg-alt: #050910;
+      --accent: #d6ff3f;
+      --accent-soft: rgba(214, 255, 63, 0.14);
+      --accent-alt: #0aff9d;
+      --text: #f5f7ff;
+      --muted: #8f95b2;
+      --card: #080c14;
+      --border: #181c2b;
+      --danger: #ff3366;
+      --shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+      --grid: #101521;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111827 0, #050608 55%);
-      color: var(--text-main);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #151c30 0, #050608 55%, #000 100%);
+      color: var(--text);
+      font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      max-width: 1120px;
-      margin: 32px auto 56px;
-      padding: 0 20px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    /* Topbar */
-    .topbar {
+    main {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* subtle grid background */
+    .page-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header.site-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 2rem;
     }
 
-    .brand-mark {
-      display: flex;
+    .brand {
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.5rem;
     }
 
-    .brand-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #111827, #1f2937);
-      border: 1px solid #4b5563;
-      display: flex;
+    .logo {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
+      padding: 0.2rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, #1f2937 0, #050608 60%);
+      box-shadow: 0 0 0 1px rgba(214, 255, 63, 0.12);
       font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--htb-green);
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .brand-title {
-      font-size: 0.9rem;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-main);
+      font-weight: 600;
     }
 
-    .brand-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .logo span:nth-child(1) {
+      color: var(--accent);
     }
 
-    .nav {
+    .logo span:nth-child(2) {
+      color: var(--muted);
+    }
+
+    .brand-tagline {
+      display: none;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    nav.main-nav {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.85rem;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
     }
 
-    .nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      padding: 6px 10px;
+    .nav-links {
+      display: none;
+      gap: 0.5rem;
+      padding: 0.2rem;
       border-radius: 999px;
-      border: 1px solid transparent;
+      background: rgba(8, 12, 20, 0.85);
+      border: 1px solid rgba(24, 28, 43, 0.9);
     }
 
-    .nav a:hover {
-      color: var(--title);
-      border-color: var(--border-subtle);
-      background: #0b1018;
+    .nav-link {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: background 0.16s ease, color 0.16s ease;
     }
 
-    /* Hero */
+    .nav-link span.bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--grid);
+    }
+
+    .nav-link:hover {
+      background: rgba(214, 255, 63, 0.11);
+      color: var(--text);
+    }
+
+    .nav-link--primary {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .nav-link--primary span.bullet {
+      background: var(--accent);
+    }
+
+    .nav-cta {
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(8, 12, 20, 0.92);
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-cta span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(214, 255, 63, 0.7);
+    }
+
+    /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-      gap: 28px;
-      align-items: center;
-      margin-bottom: 32px;
+      grid-template-columns: minmax(0, 1.35fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
     }
 
-    .hero-main {
+    .hero-main-card {
+      background:
+        radial-gradient(circle at top left, rgba(214, 255, 63, 0.12) 0, transparent 55%),
+        radial-gradient(circle at top right, rgba(15, 255, 173, 0.18) 0, transparent 60%),
+        linear-gradient(145deg, #050608, #050910 40%, #050608 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.6rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% -10%, rgba(214, 255, 63, 0.3) 0, transparent 55%),
+        radial-gradient(circle at 110% 10%, rgba(10, 255, 157, 0.35) 0, transparent 50%),
+        radial-gradient(circle at 50% 120%, rgba(72, 209, 255, 0.2) 0, transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-header {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3rem;
+      gap: 0.75rem;
     }
 
-    .hero-kicker {
-      font-size: 0.8rem;
-      text-transform: uppercase;
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.28rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 6, 8, 0.8);
+      font-size: 0.75rem;
       letter-spacing: 0.18em;
-      color: var(--htb-green);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-pill .led {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 13px rgba(214, 255, 63, 0.9);
+    }
+
+    .hero-id {
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      opacity: 0.9;
     }
 
     .hero-title {
-      font-size: 2.2rem;
-      line-height: 1.15;
-      color: var(--title);
-      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 2.9rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-title span.block-1 {
+      display: block;
+      font-weight: 600;
+    }
+
+    .hero-title span.block-2 {
+      display: block;
+      font-weight: 700;
     }
 
     .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      max-width: 520px;
+      max-width: 32rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-subtitle strong {
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 4px;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      text-decoration: none;
-      border: 1px solid var(--btn-border);
-      background: var(--btn-bg);
-      color: var(--text-main);
+      gap: 0.4rem;
+      padding: 0.75rem 1.3rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+      background: none;
+      color: var(--text);
     }
 
     .btn-primary {
-      border-color: #f97373;
-      background: linear-gradient(135deg, #b91c1c, #f97373);
-      color: #0b0f19;
-      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), #f7ff9f);
+      color: #020308;
+      box-shadow: 0 0 25px rgba(214, 255, 63, 0.6);
     }
 
-    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 30px rgba(214, 255, 63, 0.9);
+    }
 
-    .btn-ghost:hover { background: #111827; }
+    .btn-ghost {
+      border-color: rgba(255, 255, 255, 0.13);
+      background: rgba(5, 6, 8, 0.88);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(12, 18, 32, 0.98);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .btn span.icon-arrow {
+      font-size: 0.95rem;
+      transform: translateY(1px);
+    }
 
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 8px;
+      gap: 0.9rem;
+      font-size: 0.75rem;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: var(--muted);
+    }
+
+    .hero-meta-item {
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius-pill);
+      background: rgba(8, 12, 20, 0.88);
+      border: 1px solid rgba(24, 28, 43, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .hero-meta-item span.label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-item span.value {
+      color: var(--accent);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .hero-stats {
+      background: rgba(5, 6, 8, 0.92);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.9rem 1.1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-stats-title {
       font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    .hero-meta span strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    .hero-aside {
-      justify-self: center;
-    }
-
-    .icon-badge svg {
-      display: block;
-      width: 120px;
-      height: 120px;
-    }
-
-    .hero-aside-note {
-      margin-top: 8px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-
-    /* Sections */
-    .section {
-      background: var(--bg-card);
-      border-radius: 6px;
-      border: 1px solid var(--border-subtle);
-      padding: 20px 20px 22px;
-      margin-bottom: 24px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .section-title {
-      font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: var(--accent);
-      margin: 0;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
     }
 
-    .section-subtitle {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .section-body p {
-      font-size: 0.94rem;
-      line-height: 1.7;
-      color: var(--text-main);
-    }
-
-    /* Cards de máquinas */
-    .grid-machines {
+    .hero-stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem 0.9rem;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.72rem;
     }
 
-    .machine-card {
-      background: var(--bg-main);
-      border-radius: 6px;
-      border: 1px solid var(--border-subtle);
-      padding: 16px 16px 18px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.9);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .machine-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: baseline;
-    }
-
-    .machine-title {
-      font-size: 1.02rem;
-      margin: 0;
-      color: var(--title);
-    }
-
-    .machine-level {
-      font-size: 0.78rem;
+    .hero-stat-label {
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: var(--htb-green);
+      margin-bottom: 0.15rem;
     }
 
-    .machine-meta {
+    .hero-stat-value {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .hero-chip-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .hero-chip {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(214, 255, 63, 0.35);
+      color: var(--accent);
+      background: rgba(5, 6, 8, 0.9);
+    }
+
+    .hero-footnote {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+
+    .hero-footnote strong {
+      color: var(--accent-alt);
+      font-weight: 500;
+    }
+
+    /* partners / badges */
+    .badge-row {
+      margin-bottom: 3rem;
+    }
+
+    .badge-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(5, 6, 8, 0.96);
+      padding: 0.8rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
+    }
+
+    .badge-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      font-size: 0.75rem;
+      color: var(--muted);
     }
 
     .badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 12, 20, 0.9);
+    }
+
+    .badge--primary {
+      border-color: rgba(214, 255, 63, 0.9);
+      color: var(--accent);
+    }
+
+    /* sections */
+    section {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-kicker {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 1rem;
+    }
+
+    .section-lead {
+      max-width: 32rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    /* WHAT IS THIS */
+    .panel {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(135deg, #050608, #060910);
+      padding: 1.4rem 1.5rem 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(214, 255, 63, 0.18) 0, transparent 55%),
+        radial-gradient(circle at bottom left, rgba(15, 255, 157, 0.24) 0, transparent 55%);
+      opacity: 0.55;
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr);
+      gap: 1.25rem;
+    }
+
+    .panel-copy p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .panel-copy p strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .panel-copy ul {
+      list-style: none;
+      display: grid;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .panel-copy li::before {
+      content: "➜";
+      margin-right: 0.5rem;
+      color: var(--accent);
+    }
+
+    .panel-aside {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 6, 8, 0.9);
+      padding: 0.9rem 1rem;
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .panel-aside-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+    }
+
+    .panel-aside-label {
+      text-transform: uppercase;
+      letter-spacing: 0.17em;
+      font-size: 0.68rem;
+    }
+
+    .panel-aside-indicator {
       display: inline-flex;
       align-items: center;
-      padding: 2px 8px;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+
+    .panel-aside-indicator span.dot {
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: #111827;
-      font-size: 0.75rem;
-      color: var(--text-main);
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(214, 255, 63, 0.9);
     }
 
-    .machine-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.6;
+    .panel-aside-grid {
+      display: grid;
+      gap: 0.35rem;
     }
 
-    .machine-footer {
+    .panel-aside-row {
       display: flex;
       justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .panel-aside-key {
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--muted);
+    }
+
+    .panel-aside-value {
+      color: var(--accent);
+    }
+
+    /* WHY USE */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(5, 6, 8, 0.96);
+      padding: 0.9rem 1rem;
+      min-height: 120px;
+    }
+
+    .feature-icon {
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 0.6rem;
+      background: var(--accent-soft);
+      display: inline-flex;
       align-items: center;
-      margin-top: 4px;
+      justify-content: center;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .feature-title {
+      font-size: 0.86rem;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .feature-body {
       font-size: 0.8rem;
+      color: var(--muted);
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      color: var(--text-muted);
+    /* WRITEUPS LIST */
+    .writeups {
+      margin-top: 1.5rem;
     }
 
-    /* Dificuldades */
-    .grid-difficulty {
+    .writeups-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+      gap: 1rem;
     }
 
-    .diff-card {
-      background: var(--bg-main);
-      border-radius: 6px;
-      border: 1px solid var(--border-subtle);
-      padding: 14px 14px 16px;
+    .writeups-column {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 12, 20, 0.96);
+      padding: 1rem 1.1rem 1.1rem;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.6);
+    }
+
+    .writeups-column-header {
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.7rem;
     }
 
-    .diff-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--title);
+    .writeups-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
     }
 
-    .diff-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    .difficulty-pill {
+      font-size: 0.7rem;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--accent);
+      background: rgba(5, 6, 8, 0.9);
     }
 
-    .diff-link {
-      margin-top: 4px;
+    .writeups-list {
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
       font-size: 0.82rem;
     }
 
-    a { color: var(--link); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* Sobre */
-    .about-list {
-      margin: 0.4rem 0 0;
-      padding-left: 1.1rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .about-list li { margin-bottom: 4px; }
-
-    footer {
-      margin-top: 22px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      border-top: 1px solid #1f2933;
-      padding-top: 10px;
+    .writeups-list li a {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: 0.6rem;
+      border: 1px solid transparent;
+      transition: background 0.12s ease, border-color 0.12s ease,
+        transform 0.12s ease;
     }
 
-    @media (max-width: 800px) {
-      .page {
-        margin: 22px auto 40px;
-        padding: 0 14px;
+    .writeups-list li a:hover {
+      background: rgba(214, 255, 63, 0.08);
+      border-color: rgba(214, 255, 63, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .writeup-name {
+      font-weight: 500;
+    }
+
+    .writeup-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .writeup-status {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+
+    /* ROADMAP */
+    .roadmap-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(135deg, #050608, #060910);
+      padding: 1.2rem 1.4rem 1.4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .roadmap-track {
+      position: relative;
+      margin-top: 1rem;
+      padding-top: 0.6rem;
+    }
+
+    .roadmap-line {
+      position: absolute;
+      top: 1.5rem;
+      left: 0.4rem;
+      right: 0.4rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      opacity: 0.7;
+    }
+
+    .roadmap-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .roadmap-step {
+      position: relative;
+      padding-top: 1.5rem;
+    }
+
+    .roadmap-step-node {
+      position: absolute;
+      top: 0.7rem;
+      left: 0.15rem;
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 999px;
+      border: 2px solid #020308;
+      background: radial-gradient(circle, var(--accent) 0, #020308 65%);
+      box-shadow: 0 0 20px rgba(214, 255, 63, 0.85);
+    }
+
+    .roadmap-step-title {
+      font-size: 0.86rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      margin-bottom: 0.3rem;
+    }
+
+    .roadmap-step-body {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* CALL TO ACTION / FOOTER */
+    .cta-section {
+      margin-top: 3.5rem;
+    }
+
+    .cta-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: radial-gradient(circle at top left, rgba(214, 255, 63, 0.22) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(10, 255, 157, 0.26) 0, transparent 55%),
+        linear-gradient(145deg, #050608, #050910 55%, #020308 100%);
+      padding: 1.5rem 1.6rem 1.6rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr);
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-title {
+      font-size: 1.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .cta-aside {
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(5, 6, 8, 0.9);
+      padding: 0.9rem 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .cta-aside-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    footer.site-footer {
+      margin-top: 2.5rem;
+      padding-top: 1.3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* scroll cue */
+    .scroll-cue {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      margin-top: 0.4rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .scroll-cue-icon {
+      width: 1.1rem;
+      height: 1.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 0.22rem;
+      overflow: hidden;
+    }
+
+    .scroll-cue-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    /* layout tweaks */
+    @media (min-width: 720px) {
+      .brand-tagline {
+        display: block;
       }
 
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
+      .nav-links {
+        display: inline-flex;
       }
 
       .hero {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
       }
 
-      .hero-aside { justify-self: flex-start; }
-      .hero-title { font-size: 1.7rem; }
+      .panel-inner {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      }
+
+      .cta-layout {
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-shell {
+        padding-inline: 1rem;
+      }
+
+      .hero-main-card,
+      .panel,
+      .badge-card,
+      .roadmap-card,
+      .cta-card,
+      .writeups-column,
+      .hero-stats {
+        border-radius: 18px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <!-- Topbar -->
-    <header class="topbar">
-      <div class="brand-mark">
-        <div class="brand-icon">SM</div>
-        <div class="brand-text">
-          <div class="brand-title">HTB-BOX</div>
-          <div class="brand-sub">Portfólio de writeups &amp; labs</div>
+  <main>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="brand">
+          <div class="logo">
+            <span>V</span>
+            <span>/ CTF</span>
+          </div>
+          <div class="brand-tagline">Writeups, notas e experimentos de segurança ofensiva.</div>
         </div>
-      </div>
-      <nav class="nav">
-        <a href="#machines">Máquinas</a>
-        <a href="#difficulty">Dificuldade</a>
-        <a href="#about">Sobre</a>
-        <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </nav>
-    </header>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-main">
-        <div class="hero-kicker">Sérgio Muniz · Segurança Ofensiva</div>
-        <h1 class="hero-title">Portfólio de writeups Hack The Box.</h1>
-        <p class="hero-subtitle">
-          Laboratório pessoal com foco em enumeração estruturada, exploração prática e automação de tarefas
-          de CTF/pentest. Cada writeup é pensado para ser reprodutível e servir de referência para futuros
-          projetos.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#machines">Ver máquinas publicadas</a>
-          <a class="btn btn-ghost" href="#about">Ver abordagem de trabalho</a>
-        </div>
-        <div class="hero-meta">
-          <span><strong>Stack:</strong> HTB, Linux, Web, Network, Priv-Esc</span>
-          <span><strong>Formato:</strong> HTML estático a partir deste repositório</span>
-        </div>
-      </div>
+        <nav class="main-nav">
+          <div class="nav-links">
+            <a class="nav-link nav-link--primary" href="#overview">
+              <span class="bullet"></span>
+              Overview
+            </a>
+            <a class="nav-link" href="#writeups">
+              <span class="bullet"></span>
+              Writeups
+            </a>
+            <a class="nav-link" href="#roadmap">
+              <span class="bullet"></span>
+              Roadmap
+            </a>
+          </div>
+          <a class="nav-cta" href="https://github.com/" target="_blank" rel="noreferrer">
+            <span class="dot"></span>
+            <span>GitHub</span>
+          </a>
+        </nav>
+      </header>
 
-      <aside class="hero-aside">
-        <div class="icon-badge">
-          <!-- Ícone genérico, neutro -->
-          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="HTB-BOX icon">
-            <defs>
-              <radialGradient id="iconGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#7aa2ff" stop-opacity="0.4" />
-                <stop offset="55%" stop-color="#7aa2ff" stop-opacity="0.05" />
-                <stop offset="100%" stop-color="#000" stop-opacity="0" />
-              </radialGradient>
-            </defs>
-            <circle cx="60" cy="60" r="56" fill="#020617" stroke="#4b5563" stroke-width="6" />
-            <circle cx="60" cy="60" r="48" fill="url(#iconGlow)" />
-            <rect x="36" y="36" width="48" height="48" rx="8" fill="#020617" stroke="#7aa2ff" stroke-width="2" />
-            <rect x="42" y="48" width="36" height="4" rx="2" fill="#9ca3af" />
-            <rect x="42" y="58" width="26" height="3" rx="1.5" fill="#6b7280" />
-            <rect x="42" y="66" width="32" height="3" rx="1.5" fill="#6b7280" />
-          </svg>
-        </div>
-        <div class="hero-aside-note">Conteúdo gerado a partir deste repositório GitHub.</div>
-      </aside>
-    </section>
-
-    <!-- Destaques / Máquinas -->
-    <section id="machines" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Máquinas em destaque</h2>
-        <p class="section-subtitle">Writeups já publicados neste repositório.</p>
-      </div>
-      <div class="section-body">
-        <div class="grid-machines">
-          <!-- Card: Data -->
-          <article class="machine-card">
-            <div class="machine-header">
-              <h3 class="machine-title">HTB: Data</h3>
-              <span class="machine-level">Easy</span>
+      <!-- HERO -->
+      <section class="hero" id="overview">
+        <div class="hero-main-card">
+          <div class="hero-header">
+            <div class="hero-pill">
+              <span class="led"></span>
+              <span>OTC-STYLE CTF BOARD</span>
             </div>
-            <div class="machine-meta">
-              <span class="badge">Linux</span>
-              <span class="badge">Web / Forensics leve</span>
-              <span>Enumeração HTTP · PCAP · análise de parâmetros</span>
+            <div class="hero-id">/ portfolio &mdash; vsec</div>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="block-1">CTF WRITEUPS</span>
+            <span class="block-2">FOR EVERYONE</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Notas de exploração, enumeração e pós-exploração focadas em
+            <strong>Hack The Box</strong> e outros labs. Sem marketing,
+            apenas o fluxo real de ataque, comando por comando.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#writeups">
+              Browse writeups
+              <span class="icon-arrow">↳</span>
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/" target="_blank" rel="noreferrer">
+              View repository
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <span class="label">Status</span>
+              <span class="value">Active learning loop</span>
             </div>
-            <p class="machine-desc">
-              Máquina focada em coleta e interpretação de dados expostos pela própria aplicação. O writeup
-              cobre enumeração web, leitura de capturas de tráfego e uso desses artefatos para guiar a
-              exploração.
-            </p>
-            <div class="machine-footer">
-              <a href="HTB_Data.html">Abrir writeup &rarr;</a>
-              <div class="tags">
-                <span>#web</span>
-                <span>#pcap</span>
-                <span>#enum</span>
+            <div class="hero-meta-item">
+              <span class="label">Focus</span>
+              <span class="value">Offensive Security &amp; CTFs</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="label">Format</span>
+              <span class="value">Step-by-step writeups</span>
+            </div>
+          </div>
+
+          <div class="scroll-cue">
+            <div class="scroll-cue-icon">
+              <div class="scroll-cue-dot"></div>
+            </div>
+            <span>Scroll</span>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div class="hero-stats">
+            <div class="hero-stats-title">Snapshot</div>
+            <div class="hero-stat-grid">
+              <div>
+                <div class="hero-stat-label">Machines</div>
+                <div class="hero-stat-value">Easy &amp; Medium</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Style</div>
+                <div class="hero-stat-value">Hands-on</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Stack</div>
+                <div class="hero-stat-value">pwsh / kali / scripts</div>
+              </div>
+              <div>
+                <div class="hero-stat-label">Scope</div>
+                <div class="hero-stat-value">Web · AD · pwn</div>
               </div>
             </div>
-          </article>
+            <div class="hero-chip-row">
+              <span class="hero-chip">Hack The Box</span>
+              <span class="hero-chip">CTF workflow</span>
+              <span class="hero-chip">Red Team mindset</span>
+            </div>
+            <div class="hero-footnote">
+              Cada writeup é pensado como se fosse um mini <strong>runbook de exploração</strong>, pronto para ser
+              reutilizado em outros alvos.
+            </div>
+          </div>
+        </aside>
+      </section>
 
-          <!-- Espaço para próxima máquina -->
-          <article class="machine-card">
-            <div class="machine-header">
-              <h3 class="machine-title">Próxima máquina</h3>
-              <span class="machine-level">Easy / Medium</span>
-            </div>
-            <div class="machine-meta">
-              <span class="badge">Placeholder</span>
-              <span>Reserve este card para o próximo writeup.</span>
-            </div>
-            <p class="machine-desc">
-              Quando adicionar um novo HTML (por exemplo em <code>Easy/&lt;nome_caixa&gt;.html</code>), duplique
-              este card, ajuste o texto e atualize o link para apontar diretamente para o writeup.
-            </p>
-            <div class="machine-footer">
-              <span>Edite em <code>index.html</code> para manter o portfólio atualizado.</span>
-            </div>
-          </article>
+      <!-- "PARTNERS" / STACK BADGES -->
+      <section class="badge-row" aria-label="Stack & platforms">
+        <div class="badge-card">
+          <div class="badge-label">LABS &amp; STACK</div>
+          <div class="badge-grid">
+            <div class="badge badge--primary">Hack The Box</div>
+            <div class="badge">Kali / Parrot</div>
+            <div class="badge">PowerShell (pwsh)</div>
+            <div class="badge">Python tooling</div>
+            <div class="badge">GitHub Pages</div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Organização por dificuldade -->
-    <section id="difficulty" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Organização por dificuldade</h2>
-        <p class="section-subtitle">Seções do repositório espelhadas na navegação do site.</p>
-      </div>
-      <div class="section-body">
-        <div class="grid-difficulty">
-          <article class="diff-card">
-            <div class="diff-name">Easy</div>
-            <div class="diff-desc">
-              Máquinas de entrada, usadas para treinar fluxo completo (enumeração &rarr; exploit &rarr; privesc)
-              e testar novas automações.
-            </div>
-            <div class="diff-link">
-              <a href="Easy/">Abrir pasta <code>Easy/</code> &rarr;</a>
-            </div>
-          </article>
+      <!-- WHAT IS THIS -->
+      <section id="what">
+        <div class="section-kicker">What is this?</div>
+        <h2 class="section-title">XOTC vibe, CTF content</h2>
 
-          <article class="diff-card">
-            <div class="diff-name">Medium / Hard (planejado)</div>
-            <div class="diff-desc">
-              Espaço reservado para futuras caixas de dificuldade maior, mantendo a mesma estrutura de HTML
-              estático e organização por diretórios.
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="panel-copy">
+              <p>
+                Este repositório é o meu hub pessoal de writeups. A ideia é ter
+                um lugar público, bem organizado e sem frescura para documentar
+                tudo o que faço em labs e CTFs.
+              </p>
+              <p>
+                O visual lembra uma landing page de cripto, mas o conteúdo é
+                100% focado em <strong>aprendizado técnico</strong>:
+              </p>
+              <ul>
+                <li>Enumeração completa com anotações de ferramenta.</li>
+                <li>Exploit chain passo a passo, sem esconder comandos.</li>
+                <li>Notas de pós-exploração, privesc e lições aprendidas.</li>
+                <li>Links diretos para os arquivos HTML de cada máquina.</li>
+              </ul>
             </div>
-          </article>
+
+            <aside class="panel-aside" aria-label="CTF profile">
+              <div class="panel-aside-header">
+                <div class="panel-aside-label">Profile</div>
+                <div class="panel-aside-indicator">
+                  <span class="dot"></span>
+                  <span>Online &amp; grinding</span>
+                </div>
+              </div>
+              <div class="panel-aside-grid">
+                <div class="panel-aside-row">
+                  <span class="panel-aside-key">Handle</span>
+                  <span class="panel-aside-value">V</span>
+                </div>
+                <div class="panel-aside-row">
+                  <span class="panel-aside-key">Focus</span>
+                  <span class="panel-aside-value">Offensive Security</span>
+                </div>
+                <div class="panel-aside-row">
+                  <span class="panel-aside-key">Main lab</span>
+                  <span class="panel-aside-value">Hack The Box</span>
+                </div>
+                <div class="panel-aside-row">
+                  <span class="panel-aside-key">Workflow</span>
+                  <span class="panel-aside-value">pwsh + scripts custom</span>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Sobre / abordagem -->
-    <section id="about" class="section">
-      <div class="section-header">
-        <h2 class="section-title">Abordagem de trabalho</h2>
-        <p class="section-subtitle">Como os writeups são estruturados.</p>
-      </div>
-      <div class="section-body">
-        <p>
-          Cada página deste portfólio é pensada como documentação técnica reutilizável. A ideia é que qualquer
-          pessoa com um ambiente de lab consiga reproduzir os passos apenas lendo o HTML do writeup, sem depender
-          de anotações externas.
+      <!-- WHY / VALUE PROP -->
+      <section id="why">
+        <div class="section-kicker">Why use these writeups?</div>
+        <h2 class="section-title">Designed for replayability</h2>
+        <p class="section-lead">
+          A ideia não é só mostrar que a máquina foi resolvida, mas criar um
+          material que eu mesmo consiga reutilizar em provas, novos labs e no
+          dia a dia de pentest.
         </p>
-        <ul class="about-list">
-          <li>Enumeração organizada por serviço (Nmap, HTTP, SMB, etc.).</li>
-          <li>Comandos claros, com foco em automação e reutilização em outros labs.</li>
-          <li>Exploração explicada de forma objetiva, sem “spoilers” desnecessários.</li>
-          <li>Espaço para notas de pós-exploração e ideias de hardening quando fizer sentido.</li>
-        </ul>
-      </div>
-    </section>
 
-    <footer>
-      <span>&copy; <span id="year"></span> Sérgio Muniz · HTB-BOX</span>
-      <span>Repositório: <a href="https://github.com/Sergiomunizss/HTB-BOX" target="_blank" rel="noopener noreferrer">github.com/Sergiomunizss/HTB-BOX</a></span>
-    </footer>
-  </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">↻</div>
+            <div class="feature-title">Fluxo completo</div>
+            <p class="feature-body">
+              Da enumeração inicial até a root flag, mantendo o contexto de
+              cada decisão tomada.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⌘</div>
+            <div class="feature-title">Comando por comando</div>
+            <p class="feature-body">
+              Comandos em PowerShell/Bash bem marcados, prontos para copiar,
+              adaptar e automatizar.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⚙</div>
+            <div class="feature-title">Foco em prática</div>
+            <p class="feature-body">
+              Menos teoria solta, mais shells abertas, privesc e provas de
+              conceito reproduzíveis.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">☂</div>
+            <div class="feature-title">Sem spoilers inúteis</div>
+            <p class="feature-body">
+              O suficiente para aprender, sem matar a graça de explorar por
+              conta própria primeiro.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- WRITEUPS LIST -->
+      <section id="writeups">
+        <div class="section-kicker">Writeups</div>
+        <h2 class="section-title">Current machines</h2>
+        <p class="section-lead">
+          Abaixo estão alguns dos writeups disponíveis neste repositório. A
+          lista cresce conforme novos labs são concluídos.
+        </p>
+
+        <div class="writeups">
+          <div class="writeups-grid">
+            <div class="writeups-column">
+              <div class="writeups-column-header">
+                <div class="writeups-tag">Tier 01</div>
+                <span class="difficulty-pill">Easy</span>
+              </div>
+              <ul class="writeups-list">
+                <li>
+                  <a href="Easy/HTB_Data.html">
+                    <span class="writeup-name">HTB: Data</span>
+                    <span class="writeup-meta">Linux · Web · Enum</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="writeup-name">HTB: BoardLight</span>
+                    <span class="writeup-meta">Linux · Dolibarr · privesc</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="writeup-name">HTB: Antique</span>
+                    <span class="writeup-meta">Linux · printer abuse</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="writeup-status">
+                Alguns links acima ainda podem ser placeholders &mdash; o
+                conteúdo entra assim que o writeup estiver limpo e revisado.
+              </p>
+            </div>
+
+            <div class="writeups-column">
+              <div class="writeups-column-header">
+                <div class="writeups-tag">Tier 02</div>
+                <span class="difficulty-pill">Medium+</span>
+              </div>
+              <ul class="writeups-list">
+                <li>
+                  <a href="#">
+                    <span class="writeup-name">AD / Windows lab</span>
+                    <span class="writeup-meta">SMB · privesc · pivot</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="writeup-name">Web chain / SQLi to RCE</span>
+                    <span class="writeup-meta">SQLi · LFI · RCE</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="writeup-name">Crypto / misc CTF</span>
+                    <span class="writeup-meta">crypto · scripting</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="writeup-status">
+                Esta coluna serve como mapa do que está em andamento (ou
+                planejado) para versões futuras do site.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROADMAP -->
+      <section id="roadmap">
+        <div class="section-kicker">Roadmap</div>
+        <h2 class="section-title">Next iterations</h2>
+        <p class="section-lead">
+          O site começa simples, mas a ideia é ir evoluindo o workflow juntos
+          com os labs: mais automação, mais métricas, mais profundidade.
+        </p>
+
+        <div class="roadmap-card">
+          <div class="roadmap-track">
+            <div class="roadmap-line" aria-hidden="true"></div>
+            <div class="roadmap-steps">
+              <div class="roadmap-step">
+                <div class="roadmap-step-node" aria-hidden="true"></div>
+                <div class="roadmap-step-title">Early access</div>
+                <p class="roadmap-step-body">
+                  Subir os principais writeups (Easy) em HTML estático
+                  versionado no Git.
+                </p>
+              </div>
+
+              <div class="roadmap-step">
+                <div class="roadmap-step-node" aria-hidden="true"></div>
+                <div class="roadmap-step-title">New UI</div>
+                <p class="roadmap-step-body">
+                  Criar templates específicos por categoria (Web, AD, pwn,
+                  crypto) e filtros por tag.
+                </p>
+              </div>
+
+              <div class="roadmap-step">
+                <div class="roadmap-step-node" aria-hidden="true"></div>
+                <div class="roadmap-step-title">Automation</div>
+                <p class="roadmap-step-body">
+                  Integrar scripts que geram o HTML diretamente a partir das
+                  anotações em markdown.
+                </p>
+              </div>
+
+              <div class="roadmap-step">
+                <div class="roadmap-step-node" aria-hidden="true"></div>
+                <div class="roadmap-step-title">Dash / stats</div>
+                <p class="roadmap-step-body">
+                  Adicionar estatísticas de máquinas, categorias e skills
+                  trabalhadas ao longo do tempo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA / FOOTER -->
+      <section class="cta-section" id="contact">
+        <div class="cta-card">
+          <div class="cta-layout">
+            <div>
+              <div class="section-kicker">Stay tuned</div>
+              <h2 class="cta-title">Get early access</h2>
+              <p class="cta-text">
+                Quer acompanhar a evolução dos labs, trocar ideia ou sugerir
+                uma máquina específica? Fica à vontade para abrir issue no
+                repositório ou mandar mensagem.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="https://github.com/" target="_blank" rel="noreferrer">
+                  Go to GitHub
+                  <span class="icon-arrow">↗</span>
+                </a>
+                <a class="btn btn-ghost" href="#overview">Back to top</a>
+              </div>
+            </div>
+
+            <aside class="cta-aside" aria-label="Contact info">
+              <div class="cta-aside-row">
+                <span>Handle</span>
+                <span>@vsec (placeholder)</span>
+              </div>
+              <div class="cta-aside-row">
+                <span>GitHub</span>
+                <span>link-do-repo-aqui</span>
+              </div>
+              <div class="cta-aside-row">
+                <span>Focus</span>
+                <span>CTF · Pentest · OffSec</span>
+              </div>
+              <p>
+                Substitua os placeholders acima pelo seu user real assim que
+                publicar o site.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div>© <span id="year"></span> V &mdash; CTF Writeups.</div>
+        <div class="footer-links">
+          <a href="#overview">Overview</a>
+          <a href="#writeups">Writeups</a>
+          <a href="#roadmap">Roadmap</a>
+        </div>
+      </footer>
+    </div>
+  </main>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // small helper for the year in the footer
+    (function () {
+      var el = document.getElementById("year");
+      if (el) {
+        el.textContent = new Date().getFullYear();
+      }
+    })();
   </script>
 </body>
 </html>
