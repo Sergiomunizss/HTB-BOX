@@ -432,10 +432,23 @@
             <li>Variáveis: <code>$IP</code>, <code>$BOX</code>, <code>$TS</code>, <code>$WORK</code>.</li>
           </ul>
           <pre><code>New-Item -ItemType Directory -Path "$HOME/ctf/env" -Force | Out-Null
-$IP = "10.129.234.47"; $BOX = "Data"; $TS = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"; $WORK = "$HOME/ctf/$IP/${BOX}_$TS"; New-Item -ItemType Directory -Path "$WORK/scans","$WORK/loot","$WORK/web","$WORK/exploit","$WORK/notes" -Force | Out-Null; Set-Location $WORK</code></pre>
+$IP = "10.129.234.47"
+$BOX = "Data"
+$TS = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+$WORK = "$HOME/ctf/$IP/${BOX}_$TS"
+New-Item -ItemType Directory -Path `
+  "$WORK/scans", `
+  "$WORK/loot", `
+  "$WORK/web", `
+  "$WORK/exploit", `
+  "$WORK/notes" -Force | Out-Null
+Set-Location $WORK</code></pre>
 
           <h3>2.2. Mapeamento de portas e serviços expostos</h3>
-          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n --min-rate 10000 -vvv -oA "$WORK/scans/full_tcp_allports" $IP</code></pre>
+          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sS -p- -n `
+  --min-rate 10000 -vvv `
+  -oA "$WORK/scans/full_tcp_allports" `
+  $IP</code></pre>
           <p>Portas identificadas:</p>
           <table>
             <thead>
@@ -462,7 +475,9 @@ $IP = "10.129.234.47"; $BOX = "Data"; $TS = Get-Date -Format "yyyy-MM-dd_HH-mm-s
             </tbody>
           </table>
           <p>As demais 65.533 portas foram reportadas como fechadas (<code>reset</code>).</p>
-          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv -oA "$WORK/scans/targeted_22_3000" $IP</code></pre>
+          <pre><code>PS [10.10.14.149] /home/smss/ctf/10.129.234.47/Data_2025-11-23_15-18-15 &gt; nmap -Pn -sCV -p 22,3000 -n -vvv `
+  -oA "$WORK/scans/targeted_22_3000" `
+  $IP</code></pre>
           <p>22/tcp: <code>OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)</code> &rarr; indica <strong>Ubuntu 18.04 Bionic</strong>.</p>
           <p>3000/tcp: serviço HTTP retornando <code>400 Bad Request</code> para entradas inválidas e <code>302 Found</code> para <code>/login</code>, com cabeçalhos de segurança básicos e cookie <code>redirect_to=%2F</code>. Forte indicação de painel web autenticado na porta 3000.</p>
         </div>
