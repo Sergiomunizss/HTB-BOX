@@ -575,26 +575,22 @@
             <li>Estrutura de diretórios: <code>scans/</code>, <code>loot/</code>, <code>web/</code>, <code>exploit/</code>, <code>notes/</code>.</li>
             <li>Variáveis: <code>$IP</code>, <code>$BOX</code>, <code>$TS</code>, <code>$WORK</code>.</li>
           </ul>
-          <pre><code>New-Item -ItemType Directory `
-  -Path "$HOME/ctf/env" `
-  -Force | Out-Null
-$IP  = "10.129.234.47"
+          <pre><code>New-Item -ItemType Directory -Path "$HOME/ctf/env" -Force | Out-Null
+$IP = "10.129.234.47"
 $BOX = "Data"
-$TS  = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
+$TS = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 $WORK = "$HOME/ctf/$IP/${BOX}_$TS"
-New-Item -ItemType Directory `
-  -Path "$WORK/scans","$WORK/loot","$WORK/web","$WORK/exploit","$WORK/notes" `
-  -Force | Out-Null
+New-Item -ItemType Directory -Path `
+  "$WORK/scans", `
+  "$WORK/loot", `
+  "$WORK/web", `
+  "$WORK/exploit", `
+  "$WORK/notes" -Force | Out-Null
 Set-Location $WORK</code></pre>
 
           <h3>2.2. Mapeamento de portas e serviços expostos</h3>
-          <pre><code>nmap `
-  -Pn `
-  -sS `
-  -p- `
-  -n `
-  --min-rate 10000 `
-  -vvv `
+          <pre><code>nmap -Pn -sS -p- -n `
+  --min-rate 10000 -vvv `
   -oA "$WORK/scans/full_tcp_allports" `
   $IP</code></pre>
           <p>Portas identificadas:</p>
@@ -623,12 +619,7 @@ Set-Location $WORK</code></pre>
             </tbody>
           </table>
           <p>As demais 65.533 portas foram reportadas como fechadas (<code>reset</code>).</p>
-          <pre><code>nmap `
-  -Pn `
-  -sCV `
-  -p 22,3000 `
-  -n `
-  -vvv `
+          <pre><code>nmap -Pn -sCV -p 22,3000 -n -vvv `
   -oA "$WORK/scans/targeted_22_3000" `
   $IP</code></pre>
           <p>22/tcp: <code>OpenSSH 7.6p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)</code> &rarr; indica <strong>Ubuntu 18.04 Bionic</strong>.</p>
