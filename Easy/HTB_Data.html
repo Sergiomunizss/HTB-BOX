@@ -552,19 +552,7 @@
         </div>
       </section>
 
-      <section class="article-section">
-        <div class="card">
-          <h2>1. Visão Geral / TL;DR</h2>
-          <ul>
-            <li>Vetor de acesso inicial: ...</li>
-            <li>Vulnerabilidade principal: ...</li>
-            <li>Foothold: ...</li>
-            <li>Escalação de privilégios: ...</li>
-            <li>Flags <code>user</code> e <code>root</code>: ...</li>
-            <li>Impacto em ambiente real: ...</li>
-          </ul>
-        </div>
-      </section>
+      
 
       <section class="article-section">
         <div class="card">
@@ -627,143 +615,19 @@ Set-Location $WORK</code></pre>
         </div>
       </section>
 
-      <section class="article-section">
-        <div class="card">
-          <h2>3. Enumeração de Serviços Web (HTTP/HTTPS)</h2>
-          <h3>3.1. Análise exploratória</h3>
-          <ul>
-            <li>Contexto da aplicação: ...</li>
-            <li>Funcionalidades visíveis: ...</li>
-            <li>Pontos que chamam atenção: ...</li>
-          </ul>
+      
 
-          <h3>3.2. Enumeração automatizada</h3>
-          <pre><code># Comando</code></pre>
-          <ul>
-            <li>Endpoint 1: ...</li>
-            <li>Endpoint 2: ...</li>
-          </ul>
+      
 
-          <h3>3.3. Funcionalidades e hipóteses de vulnerabilidade</h3>
-          <ul>
-            <li>Pontos de entrada (GET/POST, uploads, APIs): ...</li>
-            <li>Comportamentos suspeitos: ...</li>
-            <li>Hipóteses: SQLi, LFI, RCE, XSS, etc.: ...</li>
-          </ul>
-        </div>
-      </section>
+      
 
-      <section class="article-section">
-        <div class="card">
-          <h2>4. Foothold (Comprometimento Inicial)</h2>
-          <h3>4.1. Vulnerabilidade explorada</h3>
-          <ul>
-            <li>Tipo: ...</li>
-            <li>Endpoint/parâmetro afetado: ...</li>
-            <li>Referências (CVE / artigo / PoC): ...</li>
-          </ul>
+      
 
-          <h3>4.2. Cadeia de exploração</h3>
-          <pre><code># Comando</code></pre>
-          <ul>
-            <li>Construção do payload: ...</li>
-            <li>Execução e obtenção de shell: ...</li>
-            <li>Estabilização da shell: ...</li>
-          </ul>
+      
 
-          <h3>4.3. User flag</h3>
-          <ul>
-            <li>Usuário comprometido: ...</li>
-            <li>Caminho de <code>user.txt</code>: ...</li>
-          </ul>
-          <pre><code># Comando</code></pre>
-        </div>
-      </section>
+      
 
-      <section class="article-section">
-        <div class="card">
-          <h2>5. Enumeração Pós-Foothold</h2>
-          <h3>5.1. Sistema</h3>
-          <ul>
-            <li>SO e kernel: ...</li>
-            <li>Usuários e grupos: ...</li>
-            <li>Sudo / cron / serviços: ...</li>
-          </ul>
-          <pre><code># Comando</code></pre>
-
-          <h3>5.2. Artefatos sensíveis</h3>
-          <ul>
-            <li>Configs em <code>/etc</code>, <code>/var/www</code>, <code>/opt</code>: ...</li>
-            <li>Credenciais, chaves, tokens: ...</li>
-            <li>Scripts internos interessantes: ...</li>
-          </ul>
-          <pre><code># Comando</code></pre>
-        </div>
-      </section>
-
-      <section class="article-section">
-        <div class="card">
-          <h2>6. Escalação de Privilégios</h2>
-          <h3>6.1. Vetor identificado</h3>
-          <ul>
-            <li>Categoria (SUID, sudo, serviço, kernel, etc.): ...</li>
-            <li>Evidências: ...</li>
-            <li>Referências: ...</li>
-          </ul>
-
-          <h3>6.2. Execução</h3>
-          <pre><code># Comando</code></pre>
-          <ul>
-            <li>Passos principais: ...</li>
-            <li>Riscos e limitações: ...</li>
-          </ul>
-
-          <h3>6.3. Root flag</h3>
-          <ul>
-            <li>Confirmação de contexto <code>root</code>: ...</li>
-            <li>Caminho de <code>root.txt</code>: ...</li>
-          </ul>
-          <pre><code># Comando</code></pre>
-        </div>
-      </section>
-
-      <section class="article-section">
-        <div class="card">
-          <h2>7. Pós-Exploração e Análise</h2>
-          <ul>
-            <li>Dados adicionais relevantes: ...</li>
-            <li>Possível movimento lateral / persistência: ...</li>
-            <li>Avaliação de risco (CIA): ...</li>
-            <li>Medidas de hardening: ...</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="article-section">
-        <div class="card">
-          <h2>8. Lições Aprendidas</h2>
-          <ul>
-            <li>Conceitos novos: ...</li>
-            <li>Ferramentas/técnicas que funcionaram bem: ...</li>
-            <li>Erros e caminhos mortos úteis para lembrar: ...</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="article-section">
-        <div class="card">
-          <h2>9. Apêndice</h2>
-          <h3>9.1. Linha do tempo de comandos</h3>
-          <pre><code># Comando</code></pre>
-
-          <h3>9.2. Referências</h3>
-          <ul>
-            <li>Writeups externos: ...</li>
-            <li>Artigos / advisories: ...</li>
-            <li>Cheatsheets / docs de ferramentas: ...</li>
-          </ul>
-        </div>
-      </section>
+      
 
       <footer class="article-footer">
         <span>© <span id="year"></span> Sérgio Muniz — HTB: Data.</span>
